@@ -1,0 +1,104 @@
+--- sary-ruby-1.2.0/searcher.c~	2011-07-13 22:53:11.748144500 +0200
++++ sary-ruby-1.2.0/searcher.c	2011-07-13 22:55:25.639144500 +0200
+@@ -80,13 +80,13 @@
+   
+     rb_scan_args(argc, argv, "11", &file_name, &array_name);
+ 
+-    Check_SafeStr(file_name);
++    SafeStringValue(file_name);
+     file_name_ptr = StringValuePtr(file_name);
+ 
+     if (array_name == Qnil)
+         searcher = sary_searcher_new(file_name_ptr);
+     else {
+-        Check_SafeStr(array_name);
++        SafeStringValue(array_name);
+         array_name_ptr = StringValuePtr(array_name);
+         searcher = sary_searcher_new2(file_name_ptr, array_name_ptr);
+     }
+@@ -123,9 +123,9 @@
+ 
+     GET_Searcher(klass, searcher);
+ 
+-    Check_SafeStr(pattern);
++    SafeStringValue(pattern);
+     pat = StringValuePtr(pattern);
+-    len = RSTRING(pattern)->len;
++    len = RSTRING_LEN(pattern);
+ 
+     if (sary_searcher_search2(searcher, pat, len))
+ 	return Qtrue;
+@@ -144,7 +144,7 @@
+ 
+     GET_Searcher(klass, searcher);
+ 
+-    len = RARRAY(pattern_array)->len;
++    len = RARRAY_LEN(pattern_array);
+     if (len == 0) {
+       return Qfalse;
+     }
+@@ -152,7 +152,7 @@
+     pat = ALLOCA_N(char*, len);
+     for (i = 0; i < len; i++) {
+ 	pattern = rb_ary_entry(pattern_array, (long)i);
+-	Check_SafeStr(pattern);
++	SafeStringValue(pattern);
+         pat[i] = StringValuePtr(pattern);
+     }
+ 
+@@ -171,7 +171,7 @@
+ 
+     GET_Searcher(klass, searcher);
+ 
+-    Check_SafeStr(pattern);
++    SafeStringValue(pattern);
+     pat = StringValuePtr(pattern);
+ 
+     if (sary_searcher_isearch(searcher, pat, NUM2INT(len)))
+@@ -202,9 +202,9 @@
+ 
+     GET_Searcher(klass, searcher);
+ 
+-    Check_SafeStr(pattern);
++    SafeStringValue(pattern);
+     pat = StringValuePtr(pattern);
+-    len = RSTRING(pattern)->len;
++    len = RSTRING_LEN(pattern);
+ 
+     if (sary_searcher_icase_search2(searcher, pat, len))
+ 	return Qtrue;
+@@ -248,12 +248,12 @@
+     if (sary_searcher_count_occurrences(searcher) == 0)
+   	return Qnil;
+ 
+-    Check_SafeStr(start_tag);
+-    Check_SafeStr(end_tag);
++    SafeStringValue(start_tag);
++    SafeStringValue(end_tag);
+     stag = StringValuePtr(start_tag);
+     etag = StringValuePtr(end_tag);
+-    slen = RSTRING(stag)->len;
+-    elen = RSTRING(etag)->len;
++    slen = RSTRING_LEN(stag);
++    elen = RSTRING_LEN(etag);
+ 
+     region = sary_searcher_get_next_tagged_region2(searcher, stag, slen,
+ 					    etag, elen, &rlen);
+--- sary-ruby-1.2.0/builder.c~	2011-07-13 22:53:11.746144500 +0200
++++ sary-ruby-1.2.0/builder.c	2011-07-13 22:58:23.855144501 +0200
+@@ -61,13 +61,13 @@
+   
+     rb_scan_args(argc, argv, "11", &file_name, &array_name);
+ 
+-    Check_SafeStr(file_name);
++    SafeStringValue(file_name);
+     file_name_ptr = StringValuePtr(file_name);
+ 
+     if (array_name == Qnil)
+         builder = sary_builder_new(file_name_ptr);
+     else {
+-        Check_SafeStr(array_name);
++        SafeStringValue(array_name);
+         array_name_ptr = StringValuePtr(array_name);
+         builder = sary_builder_new2(file_name_ptr, array_name_ptr);
+     }
