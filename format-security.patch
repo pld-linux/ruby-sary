@@ -1,0 +1,31 @@
+--- sary-ruby-1.2.0/searcher.c~	2013-09-14 19:25:50.000000000 +0300
++++ sary-ruby-1.2.0/searcher.c	2013-09-14 19:26:30.662671141 +0300
+@@ -91,7 +91,7 @@
+         searcher = sary_searcher_new2(file_name_ptr, array_name_ptr);
+     }
+     if (searcher == NULL)
+-	rb_raise(rb_eIOError, g_strerror(errno));
++	rb_raise(rb_eIOError, "%s", g_strerror(errno));
+ 
+     Check_Type(klass, T_DATA);
+     RDATA(klass)->dfree = (RUBY_DATA_FUNC)rsearcher_destroy;
+--- sary-ruby-1.2.0/builder.c~	2013-09-14 19:26:41.000000000 +0300
++++ sary-ruby-1.2.0/builder.c	2013-09-14 19:26:43.133250393 +0300
+@@ -72,7 +72,7 @@
+         builder = sary_builder_new2(file_name_ptr, array_name_ptr);
+     }
+     if (builder == NULL)
+-	rb_raise(rb_eIOError, g_strerror(errno));
++	rb_raise(rb_eIOError, "%s", g_strerror(errno));
+ 
+     Check_Type(klass, T_DATA);
+     RDATA(klass)->dfree = (RUBY_DATA_FUNC)rsbuilder_destroy;
+@@ -104,7 +104,7 @@
+     }
+ 
+     if (func(builder) == FALSE) {
+-	rb_raise(rb_eRuntimeError, g_strerror(errno));
++	rb_raise(rb_eRuntimeError, "%s", g_strerror(errno));
+     }
+ 
+     return klass;

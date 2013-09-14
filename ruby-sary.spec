@@ -10,6 +10,7 @@ Source0:	http://sary.sourceforge.net/%{pkgname}-ruby-%{version}.tar.gz
 # Source0-md5:	c885abffea72f25cb0f6286770a78ac1
 Patch0:		%{name}-no-version.patch
 Patch1:		%{name}-ruby19.patch
+Patch2:		format-security.patch
 URL:		http://sary.sourceforge.net/
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	pkgconfig
@@ -29,6 +30,7 @@ Wiązanie języka Ruby do biblioteki Sary.
 %setup -q -n %{pkgname}-ruby-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__ruby} extconf.rb \
