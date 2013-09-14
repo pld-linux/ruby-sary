@@ -3,7 +3,7 @@ Summary:	Ruby Binding of Sary
 Summary(pl.UTF-8):	Wiązanie języka Ruby do biblioteki Sary
 Name:		ruby-%{pkgname}
 Version:	1.2.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Development/Languages
 Source0:	http://sary.sourceforge.net/%{pkgname}-ruby-%{version}.tar.gz
@@ -13,11 +13,10 @@ Patch1:		%{name}-ruby19.patch
 URL:		http://sary.sourceforge.net/
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.484
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
 BuildRequires:	sary-devel
-%{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,15 +31,16 @@ Wiązanie języka Ruby do biblioteki Sary.
 %patch1 -p1
 
 %build
-%{__ruby} extconf.rb
+%{__ruby} extconf.rb \
+	--vendor
+
 %{__make} \
 	CC="%{__cc}" \
 	LDFLAGS="%{rpmldflags}" \
-	CFLAGS="%{rpmcflags} -fPIC `pkg-config glib-2.0 --cflags`"
+	CFLAGS="%{rpmcflags} -fPIC $(pkg-config glib-2.0 --cflags)"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -51,4 +51,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README.en.rd Reference.en.rd
 %lang(ja) %doc README.ja.rd Reference.ja.rd
-%attr(755,root,root) %{ruby_sitearchdir}/%{pkgname}.so
+%attr(755,root,root) %{ruby_vendorarchdir}/sary.so
