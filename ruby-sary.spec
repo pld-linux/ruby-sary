@@ -3,7 +3,7 @@ Summary:	Ruby Binding of Sary
 Summary(pl.UTF-8):	Wiązanie języka Ruby do biblioteki Sary
 Name:		ruby-%{pkgname}
 Version:	1.2.0
-Release:	6
+Release:	7
 License:	LGPL v2.1+
 Group:		Development/Languages
 Source0:	http://sary.sourceforge.net/%{pkgname}-ruby-%{version}.tar.gz
